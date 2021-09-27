@@ -1,9 +1,10 @@
 package com.example.carfinder;
 
-import java.util.List;
-import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
+import java.util.List;
 
 //data access object
 @Component
@@ -17,7 +18,7 @@ public class CarDaoJDBC implements CarDao {
     public void create(String model, int year, int price, int doors) {
         JdbcTemplate insert = new JdbcTemplate(datasource);
         insert.update("insert into car (model, year, price, doors) values(?,?,?,?)",
-                        new Object[] {model, year, price, doors});
+                new Object[]{model, year, price, doors});
     }
 
     public List<Car> selectAll() {
@@ -28,6 +29,6 @@ public class CarDaoJDBC implements CarDao {
     public List<Car> selectByPrice(int minPrice, int maxPrice) {
         JdbcTemplate select = new JdbcTemplate(datasource);
         String sql = "select model, year, price, doors from car where price between ? and ?";
-        return select.query(sql, new CarMapper(), new Object[] {minPrice, maxPrice});
+        return select.query(sql, new CarMapper(), new Object[]{minPrice, maxPrice});
     }
 }
