@@ -18,4 +18,21 @@ public class CarController {
     public List<Car> greeting() {
         return cd.selectAll();
     }
+    
+    @GetMapping("/cars/doors")
+    public List<Car> greeting2() {
+    	 return cd.selectDoors();
+    }
+    
+    @GetMapping("/cars/year")
+    public List<Car> greeting3() {
+    	 return cd.selectYear();
+    	// return cd.selectByYear(2022);
+    }
+    
+    @GetMapping("/cars/model")
+    public List<Car> greeting4() {
+    	 return cd.selectModel();
+    	// return cd.selectByModel("Honda Civic");
+    }
 }

@@ -26,16 +26,23 @@ public class DataBaseLoader implements CommandLineRunner{
         jt.execute("create table car(model varchar(250), year int, price int, doors int)");
 
         //populate with cars
-        cd.create("Toyota Camry", 2022, 25000, 4);
-        cd.create("Honda Civic", 2022, 22000, 4);
+        cd.create("Toyota Camry", 2020,25000, 4);
+        cd.create("Honda Civic", 2019, 22000, 4);
         cd.create("BMW M5", 2022, 103000, 4);
-        cd.create("Porsche 911", 2022, 101000, 2);
+        cd.create("Porsche 911", 2021, 101000, 2);
         cd.create("Hyundai Santa Cruz", 2022, 24000, 4);
         cd.create("Ford Mustang Mach-E", 2022, 43000, 4);
-
+ 
+        
+        
         System.out.println("-------------");
-        List<Car> cars = cd.selectAll();
+     //   List<Car> cars = cd.selectAll();
+        List<Car> cars = cd.selectByDoors(2);
+        List<Car> cars2 = cd.selectByYear(2022);
+        List<Car> cars3 = cd.selectByModel("Honda Civic");
         cars.forEach(System.out::println);
+        cars2.forEach(System.out::println);
+        cars3.forEach(System.out::println);
         System.out.println("-------------");
 
     }

@@ -5,6 +5,7 @@ public class Car {
     private int year;
     private int price;
     private int doors;
+    private String engine;
     
     public String getModel() {
         return model;
@@ -37,6 +38,14 @@ public class Car {
     public void setDoors(int doors) {
         this.doors = doors;
     }
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
 
     public String toString() {
         return (model + " - " + year + " - " + price);
