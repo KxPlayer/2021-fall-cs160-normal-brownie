@@ -44,6 +44,15 @@ public class DataBaseLoader implements CommandLineRunner{
         cars2.forEach(System.out::println);
         cars3.forEach(System.out::println);
         System.out.println("-------------");
+        CarParams pr = new CarParams();
+        pr.minyear(2020);
+        pr.maxyear(2022);
+        pr.doors(4);
+        pr.minprice(40000);
+        pr.maxprice(50000);
+        List<Car> cars4 = cd.selectByParams(pr);
+        cars4.forEach(System.out::println);
+        System.out.println(pr.getMap());
 
     }
 }

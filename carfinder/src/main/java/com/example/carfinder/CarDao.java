@@ -12,6 +12,9 @@ public interface CarDao {
     //gets all cars in database
     public List<Car> selectAll();
     
+    //select by parameter object
+    public List<Car> selectByParams(CarParams cp);
+
     public List<Car> selectDoors();
     
     public List<Car> selectYear();

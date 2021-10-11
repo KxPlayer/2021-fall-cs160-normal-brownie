@@ -1,10 +1,13 @@
 package com.example.carfinder;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 
 //data access object
 @Component
@@ -28,7 +31,30 @@ public class CarDaoJDBC implements CarDao {
         return select.query("select model, year, price, doors from car", new CarMapper());
     }
     
-    
+    public List<Car> selectByParams(CarParams cp) {
+        NamedParameterJdbcTemplate select = new NamedParameterJdbcTemplate(datasource);
+        StringJoiner sj = new StringJoiner(" and ", " where ", "");
+        sj.setEmptyValue("");
+        Map<String, Object> mp = cp.getMap();
+        String sql = "select model, year, price, doors from car";
+        if (mp.containsKey("minyear"))
+            sj.add("year >= :minyear");
+        if (mp.containsKey("maxyear"))
+            sj.add("year <= :maxyear");
+        if (mp.containsKey("minprice"))
+            sj.add("price >= :minprice");
+        if (mp.containsKey("maxprice"))
+            sj.add("price <= :maxprice");
+        if (mp.containsKey("doors"))
+            sj.add("doors = :doors");
+
+        return select.query(sql + sj, mp, new CarMapper());
+
+    }
+/*
+ and " +
+"(:doors is NULL or doors = :doors)";
+*/
     public List<Car> selectDoors() {
         JdbcTemplate select = new JdbcTemplate(datasource);
         return select.query("select model, year, price, doors from car", new CarMapper());
