@@ -13,7 +13,7 @@ class App extends Component {
 
 
   async componentDidMount() {
-    const response = await fetch('http://localhost:8080/cars');
+    const response = await fetch('/cars');
     const body = await response.json();
     console.log(body);
     this.setState({ groups: body, isLoading: false });   
