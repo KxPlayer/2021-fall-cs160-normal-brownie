@@ -1,54 +1,33 @@
 package com.example.carfinder;
 
 public class Car {
-    private String model;
-    private int year;
-    private int price;
-    private int doors;
-    private String engine;
+    public int carid;
+    public String make;
+    public String model;
+    public int price;
+    public int year;
+    public int doors;
+    public String fueltype;
+    public int epapassenger;
+    public String transmission;
+    public String engine;
+    public double weight;
+    public double length;
+    public double width;
+    public int towingcapacity;
+    public double trunkcapacity;
+    public int horsepower;
+    public int horsepowerrpm;
+    public int torque;
+    public int torquerpm;
+    public int mpgcity;
+    public int mpghighway;
+    public int mpgcombined;
+    public boolean luxury;
+    public boolean sport;
     
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getDoors() {
-        return doors;
-    }
-
-    public void setDoors(int doors) {
-        this.doors = doors;
-    }
-    public String getEngine() {
-        return engine;
-    }
-
-    public void setEngine(String engine) {
-        this.engine = engine;
-    }
-
-
     public String toString() {
-        return (model + " - " + year + " - " + price);
+        return (carid + " - " + make + " - " + model + " - " + year + " - " + price + " - " + weight);
     }
 
 }
