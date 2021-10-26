@@ -105,7 +105,6 @@ public class DataBaseLoader implements CommandLineRunner{
         cd.create(c2);
         cd.create(c1);
         
-        
         System.out.println("-------------");
          List<Car> cars = cd.selectAll();
         cars.forEach(System.out::println);
@@ -118,6 +117,10 @@ public class DataBaseLoader implements CommandLineRunner{
         List<Car> cars4 = cd.selectByParams(pr);
         cars4.forEach(System.out::println);
         System.out.println(pr.getMap());
+        
+        System.out.println();
+        List<Car> cars5 = cd.selectByPrice(100,25000);
+        cars5.forEach(System.out::println);
 
     }
 }

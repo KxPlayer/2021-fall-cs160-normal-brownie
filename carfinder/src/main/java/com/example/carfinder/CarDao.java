@@ -15,9 +15,14 @@ public interface CarDao {
     //select by parameter object
     public List<Car> selectByParams(CarParams cp);
 
-    //gets all cars between min and max price
-    public List<Car> selectByPrice(int minPrice, int maxPrice);
-    
+	public List<Car> selectByPrice(int min, int max);
 
+	public void addNewCar(Car car);
+
+	public void deleteCar(Long id);
+
+	public Car getById(Long id);
+
+	public List<Car> getByModel(String model);
 
 }
