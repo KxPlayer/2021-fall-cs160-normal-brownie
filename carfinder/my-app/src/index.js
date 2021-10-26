@@ -3,15 +3,48 @@ import ReactDOM from 'react-dom';
 import { Button } from 'react-bootstrap';
 import './index.css';
 
+var userInput = [null, null, null, null];
+const qna = [
+  {
+    questionID: 0, 
+    question: "Would you like a car worth more than $50,000?", 
+    answer1: "Yes", 
+    answer1Value: "true",
+    answer2: "No",
+    answer2Value: "false"
+  },
+  {
+    questionID: 1, 
+    question: "How many doors?", 
+    answer1: "2", 
+    answer1Value: "2",
+    answer2: "4",
+    answer2Value: "4"
+  },
+  {
+    questionID: 2, 
+    question: "Automatic or manual?", 
+    answer1: "Automatic", 
+    answer1Value: "automatic",
+    answer2: "Manual",
+    answer2Value: "manual"
+  },
+  {
+    questionID: 3, 
+    question: "Electric or gasoline?", 
+    answer1: "Electric", 
+    answer1Value: "electric",
+    answer2: "Gasoline",
+    answer2Value: "gasoline"
+  }
+];
+
 class App extends Component {
   state = {
     isLoading: true,
     isPressed: false,
-    chosenValue: -1,
-    groups: [],
-    listName: []
+    groups: []
   };
-
 
   async componentDidMount() {
     const response = await fetch('/cars');
@@ -20,18 +53,18 @@ class App extends Component {
     this.setState({ groups: body, isLoading: false });
   }
 
-  buttonPressed(value) {
-    const { isPressed, chosenValue } = this.state;
-    console.log("button " + value + " was pressed");
-    this.setState({ listName: [this.state.listName, value] });
-    console.log(listName);
-    //listName.add[value]
-
+  buttonPressed(index, value) {
+    const { isPressed } = this.state;
+    userInput[index] = value;
+    console.log(userInput);
+    this.forceUpdate();
+    if(userInput[0] != null && userInput[1] != null && userInput[2] != null && userInput[3] != null){
+        this.setState({isPressed:true});
+    }
   }
 
-
   render() {
-    const { groups, isPressed, isLoading, chosenValue } = this.state;
+    const { groups, isPressed, isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
@@ -41,39 +74,19 @@ class App extends Component {
       return (
         <>
           <Header />
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Would you like a car worth more than $50,000?</h1>
+          {qna.map(questionandanswer =>{
+            if(userInput[questionandanswer.questionID] == null){
+            return <><div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
+            <h1>{questionandanswer.question}</h1>
           </div>
           <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test1")}>Yes</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test2")}>No</Button>
-          </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>How many doors?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test3")}>2</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test4")}>4</Button>
-          </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Automatic or manual?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test5")}>Automatic</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test6")}>Manual</Button>
-          </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Electric or gasoline?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test7")}>Electric</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test8")}>Gasoline</Button>
-          </div>
-
+            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed(questionandanswer.questionID, questionandanswer.answer1Value)}>{questionandanswer.answer1}</Button>
+            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed(questionandanswer.questionID, questionandanswer.answer2Value)}>{questionandanswer.answer2}</Button>
+          </div></>
+          }
+        }
+          )
+          }
 
         </>
 
@@ -85,16 +98,8 @@ class App extends Component {
           <h1>Here are some cars that match your needs!</h1>
         </div>
         <div style={{ textAlign: 'center' }}>
-          {groups.map(group => {
-            if (chosenValue == 1) {
-              if (group.price > 50000) {
-                return <div key={group.model}><p>{group.model} for ${group.price}</p></div>;
-              }
-            } else if (chosenValue == 0) {
-              if (group.price <= 50000) {
-                return <div key={group.model}><p>{group.model} for ${group.price}</p></div>;
-              }
-            }
+          {userInput.map(input => {
+            return <p>{input}</p>
           })
           }
         </div>
