@@ -74,4 +74,27 @@ public class CarDaoJDBC implements CarDao {
         return select.query(sql, new CarMapper(), new Object[]{minPrice, maxPrice});
     }
 
+    public List<Car> selectById(int carid) {
+        JdbcTemplate select = new JdbcTemplate(datasource);
+        String sql = "select * from car where carid = ?";
+        return select.query(sql, new CarMapper(), new Object[]{carid});
+    }
+
+    public List<Car> searchByName(String s) {
+        String[] words = s.split("\\s+");
+        JdbcTemplate select = new JdbcTemplate(datasource);
+        String sql = "select * from car";
+        StringJoiner sj = new StringJoiner(" and ", " where ", "");
+        sj.setEmptyValue("");
+        Object[] doublewords = new Object[words.length*2];
+        for (int i = 0; i < words.length; i++) {
+            String newstring = words[i] + "%";
+            doublewords[2*i] = newstring;
+            doublewords[2*i+1] = newstring;
+            sj.add("(lower(make) like ? or lower(model) like ?)");
+        }
+        return select.query(sql + sj, new CarMapper(), (Object[])doublewords);
+    }
+
+
 }
