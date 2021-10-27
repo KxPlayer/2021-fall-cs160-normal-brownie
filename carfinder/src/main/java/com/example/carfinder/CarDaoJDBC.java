@@ -1,27 +1,19 @@
 package com.example.carfinder;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.ArrayList;
-import java.util.Iterator; 
 
 //data access object
 @Component
 public class CarDaoJDBC implements CarDao {
     private DataSource datasource;
-    
-    @Autowired
-    private CarDao cd;
-    
+
     public void setDataSource(DataSource ds) {
         datasource = ds;
     }
@@ -82,58 +74,4 @@ public class CarDaoJDBC implements CarDao {
         return select.query(sql, new CarMapper(), new Object[]{minPrice, maxPrice});
     }
 
-    
-    @ResponseStatus(HttpStatus.OK)
-	public void addNewCar(Car car) {
-		create(car);
-	//	System.out.print(car);
-	}
-
-
-    @ResponseStatus(HttpStatus.OK)
-	public void deleteCar(Long id) {
-	
-		Iterator<Car> iterator = cd.selectAll().iterator();  
-		while(iterator.hasNext())  
-		{  
-		Car cars=iterator.next(); 
-		if(cars.carid == id)  
-		{  
-		//	System.out.print(cars.carid  + " removed");
-			iterator.remove();  
-		}		
-		}
-	}
-
-	@Override
-	public Car getById(Long id) {
-		Iterator<Car> iterator = cd.selectAll().iterator();  
-		while(iterator.hasNext())  
-		{  
-		Car cars=iterator.next(); 
-		if(cars.carid == id)  
-		{  
-			return cars;
-		}		
-		}
-		return null;
-		
-	}
-
-	@Override
-	public List<Car> getByModel(String model) {
-		Iterator<Car> iterator = cd.selectAll().iterator();
-		Car cars = null;
-		List<Car> namedCars = new ArrayList<Car>();
-		
-		while(iterator.hasNext())  
-		{  
-		 cars=iterator.next(); 
-		if(cars.model.equals(model))  	{ 
-			namedCars.add(cars);
-		}		
-		}
-		
-		return namedCars;
-	}
 }
