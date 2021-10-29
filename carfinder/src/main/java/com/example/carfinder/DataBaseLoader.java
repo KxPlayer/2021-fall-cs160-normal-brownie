@@ -1,9 +1,6 @@
 package com.example.carfinder;
 
 import javax.sql.DataSource;
-
-import com.example.carfinder.accountdata.*;
-
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,13 +16,9 @@ public class DataBaseLoader implements CommandLineRunner{
     @Autowired
     private CarDao cd;
 
-    @Autowired
-    private UserDao ud;
-
     @Override
     public void run(String... args) throws Exception {
         cd.setDataSource(ds);
-        ud.setDataSource(ds);
 
         //create table car
         JdbcTemplate jt = new JdbcTemplate(ds);
@@ -56,14 +49,6 @@ public class DataBaseLoader implements CommandLineRunner{
             + "luxury Boolean,"
             + "sport Boolean)");
 
-        //create user table
-        jt.execute("drop table if exists user");
-        jt.execute("create table user("
-            + "userid int auto_increment primary key,"
-            + "username varchar(50) unique,"
-            + "password varchar(50))"
-        );
-
         //populate with cars
         Car c1 = new Car();
         c1.make = "Toyota";
@@ -90,7 +75,9 @@ public class DataBaseLoader implements CommandLineRunner{
         c1.luxury = false;
         c1.sport = false;
 
+
         Car c2 = new Car();
+     
         c2.make = "Ford";
         c2.model = "Mustang MACH-E";
         c2.price = 42895;
@@ -120,7 +107,7 @@ public class DataBaseLoader implements CommandLineRunner{
         c3.model = "sorcery";
         c3.price = 60000;
         c3.year = 2024;
-        c3.doors = 4;
+        c3.doors = 2;
         c3.fueltype = "Gas";
         c3.epapassenger = 1000;
         c3.transmission = "Manual";
@@ -165,20 +152,22 @@ public class DataBaseLoader implements CommandLineRunner{
         c4.luxury = false;
         c4.sport = false;
 
+
         cd.create(c1);
         cd.create(c2);
         cd.create(c3);
         cd.create(c4);
-        
+
+
         System.out.println("-------------");
         List<Car> cars = cd.selectAll();
         cars.forEach(System.out::println);
         System.out.println("-------------");
         CarParams pr = new CarParams();
-        //pr.doors(4);
+        pr.doors(4);
         pr.minprice(10000);
         pr.maxprice(50000);
-        //pr.make("BMW");
+        pr.make("BMW");
         List<Car> cars4 = cd.selectByParams(pr);
         cars4.forEach(System.out::println);
         System.out.println(pr.getMap());
@@ -186,26 +175,5 @@ public class DataBaseLoader implements CommandLineRunner{
         List<Car> cars2 = cd.searchByName("ford mu");
         cars2.forEach(System.out::println);
 
-        //populate with users
-        ud.create("tom", "password");
-        ud.create("tim", "password");
-        ud.create("tam", "password");
-        ud.create("tum", "password");
-        ud.create("timbo", "password");
-        ud.create("tip", "password");
-        ud.create("tap", "password");
-        System.out.println("-------------");
-        List<User> u1 = ud.getAll();
-        u1.forEach(System.out::println);
-
-        ud.delete(2);
-        ud.delete(4);
-        ud.editPassword(3, "newpassword");
-        System.out.println("-------------");
-        List<User> u2 = ud.getAll();
-        u2.forEach(System.out::println);
-
-        User tom = ud.getUser(1);
-        System.out.println(tom.username);
     }
 }
