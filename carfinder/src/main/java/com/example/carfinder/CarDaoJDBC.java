@@ -1,31 +1,19 @@
 package com.example.carfinder;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.ArrayList;
-import java.util.Iterator; 
-
 //data access object
 @Component
 public class CarDaoJDBC implements CarDao {
     private DataSource datasource;
-    
-    @Autowired
-    private CarDao cd;
-    
     public void setDataSource(DataSource ds) {
         datasource = ds;
     }
-
 	@Override
 	public void create(Car c) {
         JdbcTemplate insert = new JdbcTemplate(datasource);
@@ -38,7 +26,6 @@ public class CarDaoJDBC implements CarDao {
                 c.trunkcapacity, c.horsepower, c.horsepowerrpm, c.torque, c.torquerpm,
                 c.mpgcity, c.mpghighway, c.mpgcombined, c.luxury, c.sport});
 	}
-
     public List<Car> selectAll() {
         JdbcTemplate select = new JdbcTemplate(datasource);
         return select.query("select * from car", new CarMapper());
@@ -72,7 +59,6 @@ public class CarDaoJDBC implements CarDao {
             sj.add("luxury = :luxury");
         if (mp.containsKey("sport"))
             sj.add("sport = :sport");
-
         return select.query(sql + sj, mp, new CarMapper());
     }
 	
@@ -81,59 +67,27 @@ public class CarDaoJDBC implements CarDao {
         String sql = "select * from car where price between ? and ?";
         return select.query(sql, new CarMapper(), new Object[]{minPrice, maxPrice});
     }
-
     
-    @ResponseStatus(HttpStatus.OK)
-	public void addNewCar(Car car) {
-		create(car);
-	//	System.out.print(car);
-	}
 
+    public List<Car> selectById(int carid) {
+        JdbcTemplate select = new JdbcTemplate(datasource);
+        String sql = "select * from car where carid = ?";
+        return select.query(sql, new CarMapper(), new Object[]{carid});
+    }
 
-    @ResponseStatus(HttpStatus.OK)
-	public void deleteCar(Long id) {
-	
-		Iterator<Car> iterator = cd.selectAll().iterator();  
-		while(iterator.hasNext())  
-		{  
-		Car cars=iterator.next(); 
-		if(cars.carid == id)  
-		{  
-		//	System.out.print(cars.carid  + " removed");
-			iterator.remove();  
-		}		
-		}
-	}
-
-	@Override
-	public Car getById(Long id) {
-		Iterator<Car> iterator = cd.selectAll().iterator();  
-		while(iterator.hasNext())  
-		{  
-		Car cars=iterator.next(); 
-		if(cars.carid == id)  
-		{  
-			return cars;
-		}		
-		}
-		return null;
-		
-	}
-
-	@Override
-	public List<Car> getByModel(String model) {
-		Iterator<Car> iterator = cd.selectAll().iterator();
-		Car cars = null;
-		List<Car> namedCars = new ArrayList<Car>();
-		
-		while(iterator.hasNext())  
-		{  
-		 cars=iterator.next(); 
-		if(cars.model.equals(model))  	{ 
-			namedCars.add(cars);
-		}		
-		}
-		
-		return namedCars;
-	}
+    public List<Car> searchByName(String s) {
+        String[] words = s.split("\\s+");
+        JdbcTemplate select = new JdbcTemplate(datasource);
+        String sql = "select * from car";
+        StringJoiner sj = new StringJoiner(" and ", " where ", "");
+        sj.setEmptyValue("");
+        Object[] doublewords = new Object[words.length*2];
+        for (int i = 0; i < words.length; i++) {
+            String newstring = words[i] + "%";
+            doublewords[2*i] = newstring;
+            doublewords[2*i+1] = newstring;
+            sj.add("(lower(make) like ? or lower(model) like ?)");
+        }
+        return select.query(sql + sj, new CarMapper(), (Object[])doublewords);
+    }
 }
