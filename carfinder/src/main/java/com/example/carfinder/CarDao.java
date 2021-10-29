@@ -13,11 +13,18 @@ public interface CarDao {
     public List<Car> selectAll();
     
     //select by parameter object
+    //see CarParams for all possible parameters
     public List<Car> selectByParams(CarParams cp);
 
     //gets all cars between min and max price
     public List<Car> selectByPrice(int minPrice, int maxPrice);
     
+    //select car by car id
+    public List<Car> selectById(int carid);
+
+    //select cars where string s is a subset of make/model
+    //case insensitive
+    public List<Car> searchByName(String s);
 
 
 }
