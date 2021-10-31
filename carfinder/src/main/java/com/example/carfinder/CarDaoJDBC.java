@@ -3,21 +3,17 @@ package com.example.carfinder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-
 //data access object
 @Component
 public class CarDaoJDBC implements CarDao {
     private DataSource datasource;
-
     public void setDataSource(DataSource ds) {
         datasource = ds;
     }
-
 	@Override
 	public void create(Car c) {
         JdbcTemplate insert = new JdbcTemplate(datasource);
@@ -30,7 +26,6 @@ public class CarDaoJDBC implements CarDao {
                 c.trunkcapacity, c.horsepower, c.horsepowerrpm, c.torque, c.torquerpm,
                 c.mpgcity, c.mpghighway, c.mpgcombined, c.luxury, c.sport});
 	}
-
     public List<Car> selectAll() {
         JdbcTemplate select = new JdbcTemplate(datasource);
         return select.query("select * from car", new CarMapper());
@@ -64,7 +59,6 @@ public class CarDaoJDBC implements CarDao {
             sj.add("luxury = :luxury");
         if (mp.containsKey("sport"))
             sj.add("sport = :sport");
-
         return select.query(sql + sj, mp, new CarMapper());
     }
 	
@@ -73,6 +67,7 @@ public class CarDaoJDBC implements CarDao {
         String sql = "select * from car where price between ? and ?";
         return select.query(sql, new CarMapper(), new Object[]{minPrice, maxPrice});
     }
+    
 
     public List<Car> selectById(int carid) {
         JdbcTemplate select = new JdbcTemplate(datasource);
@@ -95,6 +90,4 @@ public class CarDaoJDBC implements CarDao {
         }
         return select.query(sql + sj, new CarMapper(), (Object[])doublewords);
     }
-
-
 }
