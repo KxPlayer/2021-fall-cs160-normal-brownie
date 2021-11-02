@@ -3,77 +3,133 @@ import ReactDOM from 'react-dom';
 import { Button } from 'react-bootstrap';
 import './index.css';
 
+var userInput = {
+  "tempFilter":null,
+  "doors":null,
+  "transmission":null,
+  "fueltype":null
+};
+
+const qna = [
+  {
+    question: "Would you like a car worth more than $50,000?",
+    value: "tempFilter", 
+    answer1: "Yes", 
+    answer1Value: true,
+    answer2: "No",
+    answer2Value: false
+  },
+  {
+    question: "How many doors?", 
+    value: "doors",
+    answer1: "2", 
+    answer1Value: 2,
+    answer2: "4",
+    answer2Value: 4
+  },
+  {
+    question: "Automatic or manual?", 
+    value: "transmission",
+    answer1: "Automatic", 
+    answer1Value: "Automatic",
+    answer2: "Manual",
+    answer2Value: "Manual"
+  },
+  {
+    question: "Electric or gasoline?", 
+    value: "fueltype",
+    answer1: "Electric", 
+    answer1Value: "Electric",
+    answer2: "Gasoline",
+    answer2Value: "Gas"
+  }
+];
+
 class App extends Component {
   state = {
-    isLoading: true,
-    isPressed: false,
-    chosenValue: -1,
-    groups: [],
-    listName: []
+    isLoading: false,
+    allButtonsClicked: false,
+    cars: []
   };
 
 
-  async componentDidMount() {
-    const response = await fetch('http://localhost:8080/cars');
+ async getCarsWithParam(){
+    this.setState({isLoading: true});
+    var firstEntry = true;
+    var requestString = '/cars/personalize';
+    
+    for (const property in userInput) {
+      if(userInput[property] == null){
+        continue;
+      }else{
+        if(!firstEntry){
+          requestString += '&';
+        }else{
+          requestString += '?';
+          firstEntry = false;
+        }
+        if(property == "tempFilter"){
+          if(userInput["tempFilter"] == true){
+            requestString += "minPrice=50000";
+          }else{
+            requestString += "maxPrice=50000";
+          }
+        }else{
+          requestString += property + "=" + userInput[property];
+        }
+      }
+    }
+
+    console.log(requestString);
+    const response = await fetch(requestString);
     const body = await response.json();
     console.log(body);
-    this.setState({ groups: body, isLoading: false });
+    this.setState({cars: body, isLoading: false})
   }
 
-  buttonPressed(value) {
-    const { isPressed, chosenValue } = this.state;
-    console.log("button " + value + " was pressed");
-    this.setState({ listName: [this.state.listName, value] });
-    console.log(listName);
-    //listName.add[value]
+  buttonPressed(valueType, value) {
+    userInput[valueType] = value;
+    this.forceUpdate();
+    var hasNull = false;
+    for (const property in userInput) {
+      if(userInput[property] == null){
+        hasNull = true;
+        break;
+      }else{
+        continue;
+      }
+    }
 
+    if(!hasNull){
+        this.setState({allButtonsClicked:true});
+        this.getCarsWithParam();
+    }
   }
-
 
   render() {
-    const { groups, isPressed, isLoading, chosenValue } = this.state;
+    const { cars, allButtonsClicked, isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
     }
 
-    if (!isPressed) {
+    if (!allButtonsClicked) {
       return (
         <>
           <Header />
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Would you like a car worth more than $50,000?</h1>
+          {qna.map(questionandanswer =>{
+            if(userInput[questionandanswer.value] == null){
+            return <><div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
+            <h1>{questionandanswer.question}</h1>
           </div>
           <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test1")}>Yes</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test2")}>No</Button>
+            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed(questionandanswer.value, questionandanswer.answer1Value)}>{questionandanswer.answer1}</Button>
+            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed(questionandanswer.value, questionandanswer.answer2Value)}>{questionandanswer.answer2}</Button>
           </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>How many doors?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test3")}>2</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test4")}>4</Button>
-          </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Automatic or manual?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test5")}>Automatic</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test6")}>Manual</Button>
-          </div>
-
-          <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#F2ECB4", borderRadius: 22 }}>
-            <h1>Electric or gasoline?</h1>
-          </div>
-          <div style={{ padding: '0', textAlign: 'center' }}>
-            <Button style={{ marginTop: 5, marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test7")}>Electric</Button>
-            <Button style={{ marginTop: 5, marginLeft: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={() => this.buttonPressed("test8")}>Gasoline</Button>
-          </div>
-
+          </>
+              }
+            })
+          }
 
         </>
 
@@ -85,16 +141,8 @@ class App extends Component {
           <h1>Here are some cars that match your needs!</h1>
         </div>
         <div style={{ textAlign: 'center' }}>
-          {groups.map(group => {
-            if (chosenValue == 1) {
-              if (group.price > 50000) {
-                return <div key={group.model}><p>{group.model} for ${group.price}</p></div>;
-              }
-            } else if (chosenValue == 0) {
-              if (group.price <= 50000) {
-                return <div key={group.model}><p>{group.model} for ${group.price}</p></div>;
-              }
-            }
+          {cars.map(car => {
+            return <p>{car.make}, {car.model} a {car.transmission} car that runs on {car.fueltype} for ${car.price} with {car.doors} doors.</p>
           })
           }
         </div>
@@ -102,7 +150,6 @@ class App extends Component {
     }
   }
 }
-
 
 
 function Header() {
