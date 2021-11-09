@@ -85,7 +85,7 @@ class App extends Component {
     var requestString = '/cars/personalize';
     
     for (const property in userInput) {
-      if(userInput[property] == null){
+      if(userInput[property] === null){
         continue;
       }else{
         if(!firstEntry){
@@ -94,8 +94,8 @@ class App extends Component {
           requestString += '?';
           firstEntry = false;
         }
-        if(property == "tempFilter"){
-          if(userInput["tempFilter"] == true){
+        if(property === "tempFilter"){
+          if(userInput["tempFilter"] === true){
             requestString += "minPrice=50000";
           }else{
             requestString += "maxPrice=50000";
@@ -112,22 +112,22 @@ class App extends Component {
   }
 
   buttonPressed(valueType, value) {
-    const {currentIndex, isLoading} = this.state;
+    const {currentIndex} = this.state;
     userInput[valueType] = value;
     this.setState({currentIndex:currentIndex + 1})
     this.forceUpdate();
 
 
-    if(currentIndex + 1 == qna.length){
+    if(currentIndex + 1 === qna.length){
         this.setState({allButtonsClicked:true});
         //this.getCarsWithParam();
         this.setState({isLoading:false});
 
-        var firstEntry = true;
+    var firstEntry = true;
     var requestString = '/cars/personalize';
     
     for (const property in userInput) {
-      if(userInput[property] == null){
+      if(userInput[property] === null){
         continue;
       }else{
         if(!firstEntry){
@@ -136,8 +136,8 @@ class App extends Component {
           requestString += '?';
           firstEntry = false;
         }
-        if(property == "tempFilter"){
-          if(userInput["tempFilter"] == true){
+        if(property === "tempFilter"){
+          if(userInput["tempFilter"] === true){
             requestString += "minPrice=50000";
           }else{
             requestString += "maxPrice=50000";
@@ -154,7 +154,7 @@ class App extends Component {
   previousQuestion(){
     const{currentIndex} = this.state;
     this.setState({currentIndex:currentIndex - 1});
-    if(currentIndex == qna.length){
+    if(currentIndex === qna.length){
       this.setState({allButtonsClicked:false});
       this.forceUpdate();
     }
@@ -180,7 +180,7 @@ class App extends Component {
     } else{
       this.setState({showPasswordLengthError:false});
     }
-    if(username.length == 0){
+    if(username.length === 0){
       console.log("need to input a username")
       this.setState({showUsernameLengthError:true});
       validSignup = false;
@@ -189,66 +189,38 @@ class App extends Component {
     }
     if(validSignup){
       this.setState({signingUp:false});
+      const userSignUp = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "username": username, "password": password})
+    };
+    fetch('/users', userSignUp)
     }
-    // submit here?
   }
 
+
+  
   render() {
     const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError} = this.state;
-
+    
     if (isLoading) {
       return <p>Loading...</p>;
     }
     if(!quizEntered && !signingUp && !loggingIn){
       return(<>
-      <Header /><div style={{ marginTop: 55, textAlign: 'center'}}>
-      <h1>Take a quiz to find a car that matches your needs!</h1>
-      <p>If you find something you like, log in to save it to your favorites list.</p>
-      <p>If you don't have an account, sign up!</p>
-      </div>
-      <div style={{textAlign: 'center'}}>
-      <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({quizEntered:true})}>Take quiz</Button>
-      <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({signingUp:true})}>Sign up</Button>
-      <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({loggingIn:true})}>Log in</Button></div></>);
+        <Header /><div style={{ marginTop: 55, textAlign: 'center'}}>
+        <h1>Take a quiz to find a car that matches your needs!</h1>
+        <p>If you find something you like, log in to save it to your favorites list.</p>
+        <p>If you don't have an account, sign up!</p>
+        </div>
+        <div style={{textAlign: 'center'}}>
+        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({quizEntered:true})}>Take quiz</Button>
+        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({signingUp:true})}>Sign up</Button>
+        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} onClick={()=>this.setState({loggingIn:true})}>Log in</Button></div>
+        </>);
     
   }else if(signingUp){
-      if (showPasswordLengthError && showUsernameLengthError){
-        return (<><Header />
-          <div style={{ marginTop: 55, marginLeft: '30%'}}>
-          <form>
-            <label>
-              Username: <input type="text" name="username" id="username" required/>
-            </label>
-            <br></br>
-            <label>
-              Password: <input type="password" name="password" id="password" minLength="8" required />
-            </label>
-            <br></br>
-            <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
-          </form>
-          
-        <p>You need to enter a username.</p>
-        <p>The password needs to be at least 8 characters.</p></div>
-        </>);
-      }else if (showPasswordLengthError){
-        return (<><Header />
-          <div style={{ marginTop: 55, marginLeft: '30%'}}>
-          <form>
-            <label>
-              Username: <input type="text" name="username" id="username" required/>
-            </label>
-            <br></br>
-            <label>
-              Password: <input type="password" name="password" id="password" minLength="8" required />
-            </label>
-            <br></br>
-            <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
-          </form>
-          
-          <p>The password needs to be at least 8 characters.</p></div>
-          </>);
-      }else if (showUsernameLengthError){
-      return (<><Header />
+      return <>{<><Header />
         <div style={{ marginTop: 55, marginLeft: '30%'}}>
         <form>
           <label>
@@ -261,25 +233,11 @@ class App extends Component {
           <br></br>
           <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
         </form>
-        <p>You need to enter a username.</p></div></>
-        );
-    }else{
-      return (<><Header />
-      <div style={{ marginTop: 55, marginLeft: '30%'}}>
-      <form>
-        <label>
-          Username: <input type="text" name="username" id="username" required/>
-        </label>
-        <br></br>
-        <label>
-          Password: <input type="password" name="password" id="password" minLength="8" required />
-        </label>
-        <br></br>
-        <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
-      </form>
-      </div>
-      </>);
-    }
+        {showUsernameLengthError ? (<p>You need to enter a username.</p>):(<></>)}
+        {showPasswordLengthError ? (<p>The password needs to be at least 8 characters.</p>):(<></>)}
+        </div></>}
+        
+      </>
 
     }else if(quizEntered){
     if (!allButtonsClicked) {
