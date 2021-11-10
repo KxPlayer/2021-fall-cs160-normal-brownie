@@ -120,7 +120,7 @@ class App extends Component {
 
     if(currentIndex + 1 === qna.length){
         this.setState({allButtonsClicked:true});
-        //this.getCarsWithParam();
+        this.getCarsWithParam();
         this.setState({isLoading:false});
 
     var firstEntry = true;
@@ -192,13 +192,15 @@ class App extends Component {
       const userSignUp = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "username": username, "password": password})
-    };
+        body: JSON.stringify({ "username": username, "password": password})};
     fetch('/users', userSignUp)
     }
   }
 
-
+  SubmitUserLogIn(username, password){
+    console.log(username, password);
+    this.setState({loggingIn:false, quizEntered:true})
+  }
   
   render() {
     const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError} = this.state;
@@ -236,7 +238,6 @@ class App extends Component {
         {showUsernameLengthError ? (<p>You need to enter a username.</p>):(<></>)}
         {showPasswordLengthError ? (<p>The password needs to be at least 8 characters.</p>):(<></>)}
         </div></>}
-        
       </>
 
     }else if(quizEntered){
@@ -274,12 +275,26 @@ class App extends Component {
       </>
     }
   } else if(loggingIn){
-    return <>
-    <Header/>
-    </>
+    return <>{<><Header />
+        <div style={{ marginTop: 55, marginLeft: '30%'}}>
+        <form>
+          <label>
+            Username: <input type="text" name="username" id="username" required/>
+          </label>
+          <br></br>
+          <label>
+            Password: <input type="password" name="password" id="password" minLength="8" required />
+          </label>
+          <br></br>
+          <Button onClick={()=> this.SubmitUserLogIn(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
+        </form>
+        </div></>}
+      </>
   }
   }
 }
+// <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
+// this is to wait for log in
 
 function Header() {
   return (
