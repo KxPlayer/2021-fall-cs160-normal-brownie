@@ -153,4 +153,49 @@ public class PersonalizedCar extends CarParams{
 		 return pr;
 	 }
 	 
+	 public boolean Validcar(Car car) {
+		 
+		 if(car.make == null) {
+			 return false;
+	    	}else if (car.model == null) {
+	    		return false;
+	    	}else if (car.price == 0) {
+	    		return false;
+	    	}else if (car.year == 0) {
+	    		return false;
+	    	}else if (car.doors == 0) {
+	    		return false;
+	    	}else if (car.fueltype == null) {
+	    		return false;
+	    	}else if (car.epapassenger == 0) {
+	    		return false;
+	    	}else if (car.transmission == null) {
+	    		return false;
+	    	}else if (car.engine == null) {
+	    		return false;
+	    	}else if (car.weight == 0) {
+	    		return false;
+	    	}else if (car.length == 0) {
+	    		return false;
+	    	}else if (car.width == 0) {
+	    		return false;
+	    	}else if (car.trunkcapacity == 0) {
+	    		return false;
+	    	}else if (car.horsepower == 0) {
+	    		return false;
+	    	}else if (car.horsepowerrpm == 0) {
+	    		return false;
+	    	}else if (car.torque == 0) {
+	    		return false;
+	    	}else if (car.torquerpm == 0) {
+	    		return false;
+	    	}else if (car.mpgcity == 0) {
+	    		return false;
+	    	}else if (car.mpghighway == 0) {
+	    		return false;
+	    	}else if (car.mpgcombined == 0) {
+	    		return false;
+	 }
+		 return true;
+  }
 }
