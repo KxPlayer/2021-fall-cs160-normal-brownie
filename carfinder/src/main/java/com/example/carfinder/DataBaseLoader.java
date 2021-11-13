@@ -4,12 +4,16 @@ import javax.sql.DataSource;
 
 import com.example.carfinder.accountdata.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLErrorCodes;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.dao.DataAccessException;
 
 @Component
 public class DataBaseLoader implements CommandLineRunner{
@@ -22,10 +26,14 @@ public class DataBaseLoader implements CommandLineRunner{
     @Autowired
     private UserDao ud;
 
+    @Autowired
+    private FavoriteDao fd;
+
     @Override
     public void run(String... args) throws Exception {
         cd.setDataSource(ds);
         ud.setDataSource(ds);
+        fd.setDataSource(ds);
 
         //create table car
         JdbcTemplate jt = new JdbcTemplate(ds);
@@ -62,6 +70,15 @@ public class DataBaseLoader implements CommandLineRunner{
             + "userid int auto_increment primary key,"
             + "username varchar(50) unique,"
             + "password varchar(50))"
+        );
+
+        jt.execute("drop table if exists favorite");
+        jt.execute("create table favorite("
+            + "userid int,"
+            + "carid int,"
+            + "foreign key (userid) references user(userid),"
+            + "foreign key (carid) references car(carid)"
+            + ")"
         );
 
         //populate with cars
@@ -205,7 +222,28 @@ public class DataBaseLoader implements CommandLineRunner{
         List<User> u2 = ud.getAll();
         u2.forEach(System.out::println);
 
-        User tom = ud.getUser(1);
-        System.out.println(tom.username);
+        fd.add(1, 1);
+        fd.add(1, 2);
+        fd.add(1, 3);
+
+        System.out.println("-------------");
+        List<Car> f1 = fd.getUserFavorites(1);
+        f1.forEach(System.out::println);
+
+        fd.delete(1, 2);
+
+        System.out.println("-------------");
+        List<Car> f2 = fd.getUserFavorites(1);
+        f2.forEach(System.out::println);
+        /*
+        try {
+            fd.add(8, 5);
+        }
+        catch (DataAccessException sd) {
+            System.out.println("data error");
+        }
+        */
+
+
     }
 }
