@@ -2,14 +2,17 @@ package com.example.carfinder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.carfinder.accountdata.User;
+
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
@@ -28,9 +31,17 @@ public class CarController {
         return cd.selectAll();
     }
     
-    @GetMapping("/cars/{price}")
-    public List<Car> getCarByPrice(@PathVariable("id") int min , int max) {
-        return cd.selectByPrice(min, max);
+    @GetMapping("/cars/price")
+    @ResponseBody
+    public ResponseEntity <List<Car>> getCarByPrice(@RequestParam(required = true) Integer minPrice,
+    		@RequestParam(required = true) Integer maxPrice) {
+    	
+    	List<Car> test = cd.selectByPrice(minPrice, maxPrice);
+    	
+        if(test.size() == 0) {
+        	return new ResponseEntity <List<Car>> (HttpStatus.BAD_REQUEST);
+        }
+    	return new ResponseEntity <List<Car>> (cd.selectByPrice(minPrice, maxPrice),HttpStatus.OK); 
     }
     
     @GetMapping("/cars/personalize")
@@ -63,25 +74,49 @@ public class CarController {
     
     @GetMapping("/cars/id")
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-   public List<Car> getSpecializedCarId (@RequestParam(required = true) Integer carid){
-   
-    	return cd.selectById(carid);
-    }
+   public ResponseEntity <List<Car>> getSpecializedCarId (@RequestParam(required = true) Integer carid){
+    	List<Car> test = cd.selectAll();
+
+    	for(int i = 0; i < test.size(); i++) {
+    		
+        if(carid.equals(test.get(i).carid)) {
+        	 return new ResponseEntity <List<Car>> (cd.selectById(carid),HttpStatus.OK);  
+        }        
+   }
+    	return new ResponseEntity <List<Car>> (HttpStatus.BAD_REQUEST);
+}
     
     @GetMapping("/cars/name")
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-   public List<Car> getSpecializedCarName (@RequestParam(required = true) String names){
-    	return cd.searchByName(names);
+   public ResponseEntity <List<Car>> getSpecializedCarName (@RequestParam(required = true) String names){
+    	List<Car> test = cd.selectAll();
+    	Car testCar;
+    	
+    	for(int i=0; i < test.size(); i++) {
+    		 testCar = test.get(i);
+    		 if(testCar.model.equalsIgnoreCase(names)) {
+    			 return new ResponseEntity <List<Car>> (cd.searchByName(names),HttpStatus.OK);
+    		 }
+    	}
+    	
+    	return new ResponseEntity <List<Car>> (HttpStatus.BAD_REQUEST);
     }
     
-    @PostMapping(
+
+	@SuppressWarnings("rawtypes")
+	@PostMapping(
   		  value = "/cars", 
   		  produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-  public void addCar(@RequestBody Car car) {
-    	cd.create(car);	
+  public ResponseEntity addCar(@RequestBody Car car) {
+    	personalize = new PersonalizedCar();
+
+    	if(personalize.Validcar(car) == false) {
+    		return new ResponseEntity (HttpStatus.BAD_REQUEST);
+    	}else {
+    		cd.create(car);	
+    	}
+    		return new ResponseEntity (HttpStatus.CREATED);
+    
   }
     
     
