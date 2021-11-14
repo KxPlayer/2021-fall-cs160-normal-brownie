@@ -30,6 +30,26 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         authentication.inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder().encode("pass"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("tom")
+                .password(passwordEncoder().encode("password"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("tim")
+                .password(passwordEncoder().encode("password"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("tam")
+                .password(passwordEncoder().encode("password"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("tum")
+                .password(passwordEncoder().encode("password"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("tommy") //isnt actually in db. just testing.
+                .password(passwordEncoder().encode("newpassword"))
                 .authorities("ROLE_USER");
     }
 
