@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.carfinder.accountdata.User;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;

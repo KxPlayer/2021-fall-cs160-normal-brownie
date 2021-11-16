@@ -1,0 +1,5 @@
+make,model,price,year,doors,fueltype,epapassenger,transmission,engine,weight,length,width,towingcapacity,trunkcapacity,horsepower,horsepowerrpm,torque,torquerpm,mpgcity,mpghighway,mpgcombined,luxury,sport
+Toyota,Camry,25000,2020,4,Gas,1000,Automatic,"4-Cyl, 2.5 Liter",3310,192.1,72.4,0,15.1,203,6600,184,5000,28,39,32,FALSE,FALSE
+Ford,Mustang MACH-E,42895,2021,4,Electric,0,n/a,Electric Motor,4394,186,74.1,0,59.7,266,0,317,0,105,100,93,FALSE,TRUE
+BMW,sorcery,60000,2024,4,Gas,1000,Manual,"100-Cyl, 3.7 Gallon",3310,192.1,72.4,0,15.1,204,6600,184,5000,28,70,68,TRUE,TRUE
+Fish,Musky,4000,2023,4,Electric,1000,Automatic,"100-Water, 12 Liter",3310,192.1,72.4,0,15.1,203,6600,184,5000,28,70,70,FALSE,FALSE

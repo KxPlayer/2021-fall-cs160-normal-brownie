@@ -1,6 +1,5 @@
 package com.example.carfinder;
 
-import com.example.carfinder.CarParams;
 
 
 public class PersonalizedCar extends CarParams{
