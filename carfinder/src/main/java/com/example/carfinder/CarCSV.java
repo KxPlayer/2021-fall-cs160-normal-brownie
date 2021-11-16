@@ -1,31 +1,56 @@
 package com.example.carfinder;
 
-public class Car {
+import com.opencsv.bean.CsvBindByPosition;
+
+public class CarCSV {
     public int carid;
+    @CsvBindByPosition(position = 0)
     public String make;
+    @CsvBindByPosition(position = 1)
     public String model;
+    @CsvBindByPosition(position = 2)
     public int price;
+    @CsvBindByPosition(position = 3)
     public int year;
+    @CsvBindByPosition(position = 4)
     public int doors;
+    @CsvBindByPosition(position = 5)
     public String fueltype;
+    @CsvBindByPosition(position = 6)
     public int epapassenger;
+    @CsvBindByPosition(position = 7)
     public String transmission;
+    @CsvBindByPosition(position = 8)
     public String engine;
+    @CsvBindByPosition(position = 9)
     public double weight;
+    @CsvBindByPosition(position = 10)
     public double length;
+    @CsvBindByPosition(position = 11)
     public double width;
+    @CsvBindByPosition(position = 12)
     public int towingcapacity;
+    @CsvBindByPosition(position = 13)
     public double trunkcapacity;
+    @CsvBindByPosition(position = 14)
     public int horsepower;
+    @CsvBindByPosition(position = 15)
     public int horsepowerrpm;
+    @CsvBindByPosition(position = 16)
     public int torque;
+    @CsvBindByPosition(position = 17)
     public int torquerpm;
+    @CsvBindByPosition(position = 18)
     public int mpgcity;
+    @CsvBindByPosition(position = 19)
     public int mpghighway;
+    @CsvBindByPosition(position = 20)
     public int mpgcombined;
+    @CsvBindByPosition(position = 21)
     public boolean luxury;
+    @CsvBindByPosition(position = 22)
     public boolean sport;
-    
+
     public int getCarid() {
         return carid;
     }
