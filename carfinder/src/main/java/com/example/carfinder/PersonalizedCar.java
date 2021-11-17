@@ -45,8 +45,6 @@ public class PersonalizedCar extends CarParams{
       }
       if(sport != null) {
     	  pr.sport(sport);
-      }else {
-    	  System.out.print("error");
       }
     		 
       return pr;
