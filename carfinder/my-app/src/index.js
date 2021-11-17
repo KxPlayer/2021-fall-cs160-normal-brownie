@@ -101,6 +101,72 @@ const qna = [
         value: 40
       }
     ]
+  },
+  {
+    question: "What car body style you would like.",
+    value: "bodytype",
+    answers:[
+      {
+        answertext:"Other",
+        value: "Other"
+      },
+      {
+        answertext:"SUV",
+        value: "SUV" 
+      },
+      {
+        answertext:"Sedan",
+        value: "Sedan"
+      },
+      {
+        answertext:"Coupe",
+        value: "Coupe"
+      }
+    ]
+  },
+  {
+    question: "What drive type you would like.",
+    value: "drivetype",
+    answers:[
+      {
+        answertext:"4WD",
+        value: "4WD"
+      },
+      {
+        answertext:"FWD",
+        value: "FWD" 
+      },
+      {
+        answertext:"RWD",
+        value: "RWD"
+      },
+      {
+        answertext:"Any",
+        value: null
+      }
+    ]
+  },
+  {
+    question: "What country you would like the car to be made in?",
+    value: "madein",
+    answers:[
+      {
+        answertext:"U.S",
+        value: "U.S"
+      },
+      {
+        answertext:"Germany",
+        value: "Germany" 
+      },
+      {
+        answertext:"Japan",
+        value: "Japan"
+      },
+      {
+        answertext:"Any",
+        value: null
+      }
+    ]
   }
 ];
 
