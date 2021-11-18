@@ -1,0 +1,127 @@
+make,model,price,year,doors,fueltype,epapassenger,transmission,engine,weight,length,width,towingcapacity,trunkcapacity,horsepower,horsepowerrpm,torque,torquerpm,mpgcity,mpghighway,mpgcombined,luxury,sport
+Toyota,Camry,25000,2020,4,Gas,1000,Automatic,"4-Cyl, 2.5 Liter",3310,192.1,72.4,0,15.1,203,6600,184,5000,28,39,32,FALSE,FALSE
+Toyota,Corolla,19600,2020,4,Gas,,Automatic,4-Cyl 1.8L,2840,,,0,,,,,,,,33,FALSE,FALSE
+Toyota,Highlander,35205,2022,4,Gas,,Automatic,6-CYL 3.5L,4260,,,,,,,,,,,24,FALSE,FALSE
+Toyota,Prius Prime,28220,2022,4,Electric,,Automatic,Electric Motor,3365,,,0,,,,,,,,54,FALSE,FALSE
+Toyota,GR86,28015,2020,2,Gas,,Manual,4-Cyl 2.0L,2800,,,0,,,,,,,,24,FALSE,TRUE
+Toyota,Supra,49990,2020,2,Gas,,Manual,6-Cyl 3.0L,,,,0,,,,,,,,26,FALSE,TRUE
+Dodge,Charger,32945,2022,4,Gas,,Automatic,6-Cyl 3.6L,3860,,,,,,,,,,,24,FALSE,TRUE
+Dodge,Challenger,30040,2021,2,Gas,,Automatic,8-Cyl 5.7L,,,,,,,,,,,,18,FALSE,TRUE
+Dodge,Durango,37070,2022,4,Gas,,Automatic,6-Cyl 3.6L,,,,,,,,,,,,18,FALSE,FALSE
+Ford,Bronco,28500,2021,4,Gas,,Automatic,4-Cyl 2.7L ,4491,,,3500,,,,,,,,22,FALSE,TRUE
+Ford,Expedition,51690,2021,4,Gas,,Automatic,6-Cyl 3.5L,4350,,,1670,,,,,,,,19,TRUE,FALSE
+Ford,Explorer,28035,2015,4,Gas,,Automatic,4-Cyl 2.0L,,,,,,,,,,,,17,TRUE,FALSE
+Ford,F-150,30985,2020,4,Gas,,Automatic,6-Cyl 3.5L,4021,,,8200,,,,,,,,21,FALSE,FALSE
+Ford,F-250,42060,2022,4,Gas,,Automatic,,,,,,,,,,,,,18,FALSE,FALSE
+Ford,Fusion,23120,2020,4,Gas,,Automatic,4-Cyl 2.5L,3816,,,0,,,,,,,,24,FALSE,FALSE
+Ford,Mustang Coupe,25380,2020,2,Gas,,Automatic,4-Cyl 2.3L,3542,,,0,,,,,,,,24,FALSE,TRUE
+Ford,Mustang GT Premium,39680,2020,2,Gas,,Manual,8-Cyl 5.0,3705,,,0,,,,,,,,22,FALSE,TRUE
+Ford,Mustang MACH-E,42895,2021,4,Electric,0,Automatic,Electric Motor,4394,186,74.1,0,59.7,266,0,317,0,105,100,93,FALSE,TRUE
+Lexus,ES,41875,2022,4,Gas,,Automatic,,,,,,,,,,,,,28,TRUE,FALSE
+Lexus,RX,46365,2022,4,Gas,,Automatic,,,,,,,,,,,,,23,TRUE,FALSE
+Lexus,RC,43145,2021,2,Gas,,Automatic,,,,,,,,,,,,,25,TRUE,TRUE
+Lexus,IS,25559,2016,4,Gas,,Automatic,,,,,,,,,,,,,26,TRUE,TRUE
+Lexus,LC,91764,2020,2,Gas,,Automatic,,,,,,,,,,,,,19,TRUE,TRUE
+BMW,sorcery,60000,2024,4,Gas,1000,Manual,"100-Cyl, 3.7 Gallon",3310,192.1,72.4,0,15.1,204,6600,184,5000,28,70,68,TRUE,TRUE
+Fish,Musky,4000,2023,4,Electric,1000,Automatic,"100-Water, 12 Liter",3310,199.1,50.2,0,15.1,203,6600,184,5000,28,70,70,FALSE,FALSE
+Volkswagen,Atlas,34670,2022,4,Gas,,Automatic,4-Cyl 2.0L,3850,,,,,,,,,,,23,FALSE,FALSE
+Volkswagen,Arteon,38190,2021,4,Gas,,Automatic,4-Cyl 2.0L,3400,,,,,,,,,,,25,FALSE,FALSE
+Volkswagen,ID.4,41190,2021,4,Electric,100,Automatic,Electric Motor,4559,180.5,72.9,0,64.2,201,0,229,0,107,91,99,TRUE,FALSE
+Volkswagen,Golf,24190,2021,4,Gas,,Automatic,4-Cyl 2.0L Turbo,3210,,,,,,,,,,,33,FALSE,TRUE
+Volkswagen,Jetta,19990,2021,4,Gas,,Automatic,4-Cyl 1.4L Turbo,3640,,,,,,,,,,,32,FALSE,FALSE
+Jeep, Wrangler Unlimited,33895,2021,4,Gas,104,Manual,"V6, VVT, 3.6 Liter",3948,188.4,73.8,3500,72.4,285,6400,260,4800,17,23,19,FALSE,FALSE
+Buick,Envision,32995,2021,4,Gas,,Automatic,"4-Cyl, Turbo, 2.0 Liter",3692,182.5,74.1,0,52.7,230,5000,258,1500,24,31,26,FALSE,FALSE
+Jeep,Compass,25390,2021,4,Gas,127,Automatic,"4-Cyl, MultiAir, PZEV, 2.4 Liter",3184,173,80,0,59.8,180,6400,175,3900,22,31,25,FALSE,FALSE
+Jeep ,Gladiator,36140,2021,4,Gas,,Automatic,,,,,,,,,,,,,19,FALSE,FALSE
+Jeep,Grand Wagoneer,88995,2022,4,Gas,,Automatic,,,,,,,,,,,,,15,TRUE,FALSE
+Jeep,Grand Cherokee,33715,2021,4,Gas,,Automatic,,,,,,,,,,,,,21,FALSE,FALSE
+Jeep,Wagoneer,66995,2022,4,Gas,,Automatic,,,,,,,,,,,,,18,TRUE,FALSE
+Jeep,Renegade,24325,2021,4,Gas,,Automatic,,,,,,,,,,,,,25,FALSE,FALSE
+Rivian,R1T,69000,2021,4,Electric,,Automatic,,,,,,,,,,,,,999,TRUE,FALSE
+Rivian,R1S,72500,2021,4,Electric,,Automatic,,,,,,,,,,,,,999,TRUE,FALSE
+Tesla,Model 3,39190,2021,4,Electric,,Automatic,,,,,,,,,,,,,141,TRUE,FALSE
+Tesla,Model Y,41190,2021,4,Electric,,Automatic,,,,,,,,,,,,,129,TRUE,FALSE
+Tesla,Model S,70629,2021,4,Electric,,Automatic,,,,,,,,,,,,,120,TRUE,FALSE
+Tesla,Model X,81190,2021,4,Electric,,Automatic,,,,,,,,,,,,,105,TRUE,FALSE
+Hyundai,Ioniq Plug-in Hybrid,27825,2022,4,Hybrid,,Automatic,,,,,,,,,,,,,119,FALSE,FALSE
+Hyundai,Ioniq Hybrid,24625,2022,4,Hybrid,,Automatic,,,,,,,,,,,,,59,FALSE,FALSE
+Hyundai,Sonata,25175,2022,4,Gas,,Automatic,,,,,,,,,,,,,32,FALSE,FALSE
+Hyundai,Sonata Hybrid,28075,2022,4,Hybrid,,Automatic,,,,,,,,,,,,,52,FALSE,FALSE
+Hyundai,Accent,16420,2022,4,Gas,,Automatic,,,,,,,,,,,,,33,FALSE,FALSE
+Hyundai,Venue,20125,2022,4,Gas,,Automatic,,,,,,,,,,,,,31,FALSE,FALSE
+Hyundai,Santa Fe,28425,2022,4,Gas,,Automatic,,,,,,,,,,,,,26,FALSE,FALSE
+Hyundai,Veloster,33525,2022,2,Gas,,Manual,,,,,,,,,,,,,25,FALSE,TRUE
+Hyundai,Genesis Coupe,12380,2015,2,Gas,,Automatic,4-Cyl 2.0L,,,,,,,,,,,,25,FALSE,TRUE
+Kia,Stinger,37125,2022,4,Gas,,Automatic,6-Cyl 3.3L Twin Turbo,,,,,,,,,,,,20,TRUE,TRUE
+Kia,Sorento,30665,2022,4,Gas,,Automatic,"4-Cyl 2,0L",,,,,,,,,,,,26,TRUE,FALSE
+Kia,Soul,20365,2022,4,Gas,,Automatic,"4-Cyl 2,0L",,,,,,,,,,,,30,FALSE,FALSE
+Kia,K5,25685,2022,4,Gas,,Automatic,"4-Cyl 2,0L",,,,,,,,,,,,32,FALSE,FALSE
+Kia,Optima,24355,2020,4,Gas,,Automatic,"4-Cyl 2,0L Turbo",,,,,,,,,,,,27,FALSE,FALSE
+Lincoln,Navigator,77480,2021,4,Gas,,Automatic,,,,,,,,,,,,,18,TRUE,FALSE
+Lincoln,MKZ,37745,2020,4,Gas,,Automatic,,,,,,,,,,,,,41,TRUE,FALSE
+Lincoln,Continental,47300,2020,4,Gas,,Automatic,,,,,,,,,,,,,20,TRUE,FALSE
+Lincoln,Aviator,52560,2022,4,Gas,,Automatic,,,,,,,,,,,,,21,TRUE,FALSE
+Lincoln,Nautilus,43595,2022,4,Gas,,Automatic,,,,,,,,,,,,,23,TRUE,FALSE
+Porsche,718 Cayman,63200,2022,2,Gas,,Manual,,,,,,,,,,,,,20,TRUE,TRUE
+Porsche,718 Boxter,63950,2022,2,Gas,,Manual,,,,,,,,,,,,,22,TRUE,TRUE
+Porsche,911,100550,2021,2,Gas,,Automatic,,,,,,,,,,,,,20,TRUE,TRUE
+Porsche,Macan,53450,2021,4,Gas,,Automatic,,,,,,,,,,,,,22,TRUE,FALSE
+Porsche,Taycan,106500,2021,4,Electric,,Automatic,,,,,,,,,,,,,80,TRUE,TRUE
+Porsche,Panamera,88550,2021,4,Gas,,Automatic,,,,,,,,,,,,,20,TRUE,TRUE
+Saturn,VUE,7652,2010,4,Gas,,Automatic,,,,,,,,,,,,,22,FALSE,FALSE
+Saturn,SKY,12515,2009,2,Gas,,Manual,,,,,,,,,,,,,21,FALSE,TRUE
+Saturn,Ion,4886,2007,4,Gas,,Manual,,,,,,,,,,,,,23,FALSE,FALSE
+Subaru,BRZ,28955,2022,2,Gas,,Manual,,,,,,,,,,,,,22,FALSE,TRUE
+Subaru,WRX,28420,2021,4,Gas,,Manual,4-Cyl 2.0L,,,,,,,,,,,,23,FALSE,TRUE
+Subaru,Outback,28047,2022,4,Gas,,Manual,,,,,,,,,,,,,29,FALSE,FALSE
+Subaru,Forester,26230,2022,4,Gas,,Automatic,,,,,,,,,,,,,29,FALSE,FALSE
+Mercury,Grand Marquis,6569,2008,4,Gas,,Automatic,,,,,,,,,,,,,18,TRUE,FALSE
+Pontiac,Grand Prix,5749,2008,4,Gas,,Automatic,,,,,,,,,,,,,21,FALSE,TRUE
+Lamborghini,Urus,253010,2019,4,Gas,,Automatic,,,,,,,,,,,,,14,TRUE,TRUE
+Lamborghini,Huracan,254569,2019,2,Gas,,Manual,,,,,,,,,,,,,15,FALSE,TRUE
+Lamborghini,Aventador,442937,2019,2,Gas,,Manual,,,,,,,,,,,,,11,FALSE,TRUE
+Mclaren,570S,195000,2020,2,Gas,,Manual,,,,,,,,,,,,,18,TRUE,TRUE
+Mclaren,GT-R,218695,2021,2,Gas,,Manual,,,,,,,,,,,,,18,TRUE,TRUE
+Mclaren,720S,301500,2020,2,Gas,,Manual,,,,,,,,,,,,,18,TRUE,TRUE
+Mercedes-Benz,A-Class,34700,2021,4,Gas,,Automatic,4-Cyl 2.0L ,3889,,,,,,,,,,,29,TRUE,FALSE
+Mercedes-Benz,S-Class,110850,2021,4,Gas,,Automatic,6-Cyl 3.0L Twin Turbo,4775,,,,,,,,,,,24,TRUE,TRUE
+Mercedes-Benz,C-Class,42650,2021,4,Gas,,Automatic,4-Cyl 20.L Turbo,3750,,,,,,,,,,,27,TRUE,TRUE
+Mitsubishi,Outlander Sport,22090,2021,4,Gas,,Automatic,4-Cyl 2.0L,3120,,,,,,,,,,,27,FALSE,FALSE
+Mitsubishi,Mirage,15565,2021,4,Gas,,Automatic,4-Cyl 1.2L,2910,,,,,,,,,,,36,FALSE,FALSE
+Nissan,Rogue,26745,2021,4,Gas,,Automatic,4-Cyl 2.5L,3638,,,,,,,,,,,30,FALSE,FALSE
+Nissan,Sentra,20335,2021,4,Gas,,Automatic,4-Cyl 2.0L,3048,,,,,,,,,,,33,FALSE,FALSE
+Nissan,Versa,15880,2021,4,Gas,,Automatic,4-Cyl 1.5L,2599,,,,,,,,,,,30,FALSE,FALSE
+Nissan,Altima,25225,2021,4,Gas,,Automatic,4-Cyl 2.5L,3208,,,,,,,,,,,32,FALSE,FALSE
+Nissan,370Z,31015,2020,2,Gas,,Manual,6-Cyl 3.7L,3386,,,,,,,,,,,20,FALSE,TRUE
+Nissan,GT-R,113540,2021,2,Gas,,Automatic,6-Cyl 3.8L Twin Turbo,3865,,,,,,,,,,,19,FALSE,TRUE
+MAZDA,MX-5 Miata,27775,2021,2,Gas,,Manual,,,,,,,,,,,,,29,FALSE,TRUE
+MAZDA,CX-30,23000,2021,4,Gas,,Automatic,,,,,,,,,,,,,28,FALSE,FALSE
+MAZDA,MAZDA3,21445,2021,4,Gas,,Automatic,,,,,,,,,,,,,31,FALSE,FALSE
+MAZDA,CX-5,26370,2021,4,Gas,,Automatic,sky engine,,,,,,,,,,,,28,FALSE,FALSE
+MAZDA,XC-9,35060,2021,4,Gas,,Automatic,,,,,,,,,,,,,24,TRUE,FALSE
+Honda,Civic,22915,2022,4,Gas,,Automatic,VTEC,,,,,,,,,,,,35,FALSE,FALSE
+Honda,Accord,25985,2022,4,Gas,,Automatic,,,,,,,,,,,,,33,FALSE,FALSE
+Honda,CR-V,26875,2022,4,Gas,,Automatic,,,,,,,,,,,,,30,FALSE,FALSE
+Honda,Accord Hybrid,35395,2022,4,Hybrid,,Automatic,,,,,,,,,,,,,110,FALSE,FALSE
+Honda,Civic Type R,38450,2021,4,Gas,,Manual,,,,,,,,,,,,,25,FALSE,TRUE
+Honda,Ridgeline,38115,2022,4,Gas,,Automatic,,,,,,,,,,,,,21,FALSE,FALSE
+Acura,MDX Sport Hybrid,54025,2020,4,Hybrid,,Automatic,VTEC,,,,,,,,,,,,27,TRUE,TRUE
+Acura,TLX,38525,2021,4,Gas,,Automatic,,,,,,,,,,,,,25,TRUE,FALSE
+Acura,RLX,55925,2020,4,Gas,,Automatic,,,,,,,,,,,,,23,TRUE,FALSE
+Acura,NSX,159495,2021,4,Gas,,Automatic,,,,,,,,,,,,,21,TRUE,TRUE
+Aston Martin,Vantage,149086,2021,2,Gas,,Automatic,,,,,,,,,,,,,17,TRUE,TRUE
+Aston Martin,DBX,179080,2022,4,Gas,,Automatic,,,,,,,,,,,,,15,TRUE,TRUE
+Aston Martin,DB11,208000,2021,2,Gas,,Automatic,,,,,,,,,,,,,20,TRUE,TRUE
+Aston Martin,Vanquish,211080,2018,2,Gas,,Automatic,,,,,,,,,,,,,17,TRUE,TRUE
+Alfa Romeo,Giulia,44065,2022,4,Gas,,Automatic,,,,,,,,,,,,,27,TRUE,TRUE
+Alfa Romeo,Stelvio,46645,2022,4,Gas,,Automatic,,,,,,,,,,,,,25,TRUE,FALSE
+Alfa Romeo,4C,68745,2020,2,Gas,,Automatic,,,,,,,,,,,,,28,TRUE,TRUE
+Audi,Q5,45195,2022,4,Gas,,Automatic,,,,,,,,,,,,,25,TRUE,FALSE
+Audi,A7,70245,2022,4,Gas,,Automatic,,,,,,,,,,,,,24,TRUE,TRUE
+Audi,R8,208020,2022,2,Gas,,Automatic,,,,,,,,,,,,,16,TRUE,TRUE
+Audi,A5,44545,2022,4,Gas,,Automatic,,,,,,,,,,,,,29,TRUE,TRUE
+Audi,RS,52082,2022,4,Gas,,Automatic,,,,,,,,,,,,,18,TRUE,TRUE
+Audi,TT,50845,2021,2,Gas,,Automatic,,,,,,,,,,,,,26,FALSE,TRUE
+Scion,FR-S,20884,2018,2,Gas,,Automatic,,,,,,,,,,,,,28,FALSE,TRUE
+Scion,TC,15110,2015,2,Gas,,Automatic,,,,,,,,,,,,,26,FALSE,TRUE
+Scion,XB,13025,2015,4,Gas,,Automatic,,,,,,,,,,,,,24,FALSE,FALSE

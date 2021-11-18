@@ -1,6 +1,5 @@
 package com.example.carfinder;
 
-import com.example.carfinder.CarParams;
 
 
 public class PersonalizedCar extends CarParams{
@@ -46,8 +45,6 @@ public class PersonalizedCar extends CarParams{
       }
       if(sport != null) {
     	  pr.sport(sport);
-      }else {
-    	  System.out.print("error");
       }
     		 
       return pr;
