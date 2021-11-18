@@ -69,8 +69,10 @@ public class FrontEndTesting {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/p[@class='result']")));
         List<WebElement> webEleList = driver.findElements(By.xpath("//div/p[@class='result']"));
 
-        // as of now, expected result is one entry
-        return webEleList.size() == 1;
+        // as of now, expected result is 18 entries
+        // i'll probably update this when more cars get added
+        //System.out.println(webEleList.size());
+        return webEleList.size() == 18;
     }
 
     // failing the sign up before sending in a valid result
@@ -241,3 +243,4 @@ public class FrontEndTesting {
         return true;
     }
 }
+
