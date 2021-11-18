@@ -109,13 +109,15 @@ class App extends Component {
     isLoading: false,
     allButtonsClicked: false,
     cars: [],
+    favorites: [],
     currentIndex: 0,
     quizEntered: false,
     signingUp: false,
     loggingIn: false,
     showUsernameLengthError: false,
     showPasswordLengthError: false,
-    loggedIn: false
+    loggedIn: false,
+    userID: null
   };
 
 
@@ -148,7 +150,7 @@ class App extends Component {
 
     console.log(requestString);
     const response = await fetch(requestString);
-    const body = await response.json();
+    const body = await response.json().catch(err => {console.log("cars not found")});
     this.setState({cars: body, isLoading: false})
   }
 
@@ -185,7 +187,6 @@ class App extends Component {
   }
 
   SubmitUserSignUp(username, password){
-    console.log(username, password);
     var validSignup = true;
     if(password.length < 8){
       console.log("password too short")
@@ -207,7 +208,19 @@ class App extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "username": username, "password": password})};
-    fetch('/users', userSignUp)
+    fetch('/users', userSignUp);
+    }
+  }
+
+  async getUserFavorites(){
+      const {userID} = this.state;
+      if (userID != null){
+      this.setState({isLoading: true});
+      var requestString = "/favorites/id?id=" + userID;
+      console.log(requestString)
+      const response = await fetch(requestString);
+      const body = await response.json().catch(err => {console.log("favorites not found")});
+      this.setState({favorites: body, isLoading: false})
     }
   }
 
@@ -218,16 +231,26 @@ class App extends Component {
     var json = await response.json().catch(err => {console.log("username not found")});
     if (json != undefined){
       if (password == json["password"]){
-        this.setState({loggingIn:false, loggedIn:true, quizEntered:true});
+        this.setState({loggingIn:false, loggedIn:true, userID:json["userid"]});
       }
     }
   }
+
+  SubmitFavoriteCar(carid){
+    const {userID} = this.state;
+    var requestString = "/favorites/user?userid=" + userID + "&carid=" + carid;
+    const addFavorite = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }};
+      fetch(requestString, addFavorite);
+  
+}
+  
   
   render() {
-    const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError} = this.state;
+    const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError, loggedIn, userID, favorites} = this.state;
     
     if (isLoading) {
-      
       return <p>Loading...</p>;
     }
     if(!quizEntered && !signingUp && !loggingIn){
@@ -238,9 +261,9 @@ class App extends Component {
         <p>If you don't have an account, sign up!</p>
         </div>
         <div style={{textAlign: 'center'}}>
-        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} name="quizButton" onClick={()=>this.setState({quizEntered:true})}>Take quiz</Button>
+        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} name="quizButton" onClick={()=>this.setState({quizEntered:true, currentIndex:0, allButtonsClicked:false})}>Take quiz</Button>
         <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} name="signUpButton" onClick={()=>this.setState({signingUp:true})}>Sign up</Button>
-        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} name="logInButton" onClick={()=>this.setState({loggingIn:true})}>Log in</Button></div>
+        <Button style={{ marginRight: 15, width: 200, height: 200, borderWidth: 0, borderRadius: 13, backgroundColor: "#C6EBE9", fontSize: 30 }} name="logInButton" onClick={()=>{this.setState({loggingIn:true}); this.getUserFavorites();}}>Log in</Button></div>
         </>);
     
   }else if(signingUp){
@@ -264,7 +287,6 @@ class App extends Component {
         </div></>}
         
       </>
-
     }else if(quizEntered){
     if (!allButtonsClicked) {
       var questionandanswer = qna[currentIndex];
@@ -293,16 +315,16 @@ class App extends Component {
         </div>
         <div style={{ textAlign: 'center' }} id="results">
           {cars.map(car => {
-            return <p class="result">{car.make}, {car.model} a {car.transmission} car that runs on {car.fueltype} for ${car.price} with {car.doors} doors.</p>
+            return <><p class="result">{car.make}, {car.model} a {car.transmission} car that runs on {car.fueltype} for ${car.price} with {car.doors} doors.</p>{loggedIn ? <Button onClick={()=>this.SubmitFavoriteCar(car.carid)}>Submit</Button> : <></>}</>;
           })
           }
+          <Button onClick={()=> this.setState({quizEntered:false})} id="exitQuiz">Exit</Button>
         </div>
       </>
     }
-  } else if(loggingIn){
+  } else if(loggingIn && !loggedIn){
     return <>{<><Header />
         <div style={{ marginTop: 55, marginLeft: '30%'}}>
-          
         <form>
           <label>
             Username: <input type="text" name="username" id="username" required/>
@@ -318,11 +340,22 @@ class App extends Component {
         </div></>}
         
       </>
+  } else if(loggingIn && loggedIn){
+    return<><Header/>
+    <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#C2F2BA", borderRadius: 22 }}>
+          <h1>Here are the cars you favorited!</h1>
+        </div>
+        <div style={{ textAlign: 'center' }} id="results">
+          <p>test</p>
+          {favorites.map(favorite => {
+            return <p class="result">{favorite.make}, {favorite.model} a {favorite.transmission} car that runs on {favorite.fueltype} for ${favorite.price} with {favorite.doors} doors.</p>;
+          })
+          }
+        </div>
+    <div style={{ marginTop: 55, marginLeft: '30%'}}><Button onClick={()=> this.setState({loggingIn:false})} id="exitLogIn">Exit</Button></div></>
   }
   }
 }
-// <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)}>Submit</Button>
-// this is to wait for log in
 
 function Header() {
   return (
