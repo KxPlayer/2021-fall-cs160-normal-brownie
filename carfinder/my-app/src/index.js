@@ -228,10 +228,16 @@ class App extends Component {
     var requestString = '/users/username';
     requestString += '?username=' + username;
     const response = await fetch(requestString);
+
+    var now1 = new Date();
+    now1.setMonth( now1.getMonth() + 1 );
+    //document.write("cookie set: " + document.cookie1)
     var json = await response.json().catch(err => {console.log("username not found")});
     if (json != undefined){
       if (password == json["password"]){
         this.setState({loggingIn:false, loggedIn:true, userID:json["userid"]});
+        document.cookie = 'username=' +requestString+'; expires=' + new Date(now1).toUTCString(); //cookie that stores username and lasts until the expiry date which is 1 month in the future. stored in plain text atm.
+        //need to connect this with the 'favorites' for users to have favorites saved for them.
       }
     }
   }
