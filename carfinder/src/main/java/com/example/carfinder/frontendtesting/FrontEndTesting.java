@@ -1,3 +1,5 @@
+/* commented out to run*/
+
 package com.example.carfinder.frontendtesting;
 
 import org.openqa.selenium.By;
@@ -66,8 +68,8 @@ public class FrontEndTesting {
         element = driver.findElement(By.xpath("//div[@id='results']"));
 
         WebDriverWait wait = new WebDriverWait(driver, 100);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/p[@class='result']")));
-        List<WebElement> webEleList = driver.findElements(By.xpath("//div/p[@class='result']"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/div[@class='result']")));
+        List<WebElement> webEleList = driver.findElements(By.xpath("//div/div[@class='result']"));
 
         // as of now, expected result is 18 entries
         // i'll probably update this when more cars get added
@@ -244,3 +246,4 @@ public class FrontEndTesting {
     }
 }
 
+/**/

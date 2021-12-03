@@ -110,7 +110,9 @@ class App extends Component {
     allButtonsClicked: false,
     cars: [],
     favorites: [],
+    currentCar: [],
     currentIndex: 0,
+    carLookup: false,
     quizEntered: false,
     signingUp: false,
     loggingIn: false,
@@ -152,6 +154,14 @@ class App extends Component {
     const response = await fetch(requestString);
     const body = await response.json().catch(err => {console.log("cars not found")});
     this.setState({cars: body, isLoading: false})
+  }
+
+  async getSingleCarInfo(carid){
+    this.setState({isLoading: true});
+    var requestString = '/cars/id?carid=' + carid;
+    const response = await fetch(requestString);
+    const body = await response.json().catch(err => {console.log("car with this id not found")});
+    this.setState({currentCar: body, isLoading: false});
   }
 
   buttonPressed(valueType, value) {
@@ -233,6 +243,10 @@ class App extends Component {
     now1.setMonth( now1.getMonth() + 1 );
     //document.write("cookie set: " + document.cookie1)
     var json = await response.json().catch(err => {console.log("username not found")});
+    
+    var now1 = new Date();
+    now1.setMonth( now1.getMonth() + 1 );
+    //document.write("cookie set: " + document.cookie1)
     if (json != undefined){
       if (password == json["password"]){
         this.setState({loggingIn:false, loggedIn:true, userID:json["userid"]});
@@ -254,10 +268,10 @@ class App extends Component {
   
   
   render() {
-    const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError, loggedIn, userID, favorites} = this.state;
+    const { cars, allButtonsClicked, isLoading, currentIndex, quizEntered, signingUp, loggingIn, showPasswordLengthError, showUsernameLengthError, loggedIn, favorites, carLookup, currentCar} = this.state;
     
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <><Header /><p style={{marginTop: 55}}>Loading in progress...</p></>;
     }
     if(!quizEntered && !signingUp && !loggingIn){
       return(<>
@@ -275,7 +289,6 @@ class App extends Component {
   }else if(signingUp){
       return <>{<><Header />
         <div style={{ marginTop: 55, marginLeft: '30%'}}>
-        
         <form>
           <label>
             Username: <input type="text" name="username" id="username" required/>
@@ -285,11 +298,11 @@ class App extends Component {
             Password: <input type="password" name="password" id="password" minLength="8" required />
           </label>
           <br></br>
-          <Button onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)} id="submitSignup">Submit</Button>
+          <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.SubmitUserSignUp(document.getElementById("username").value, document.getElementById("password").value)} id="submitSignup">Submit</Button>
         </form>
         {showUsernameLengthError ? (<p id="usernameLengthError">You need to enter a username.</p>):(<></>)}
         {showPasswordLengthError ? (<p id="passwordLengthError">The password needs to be at least 8 characters.</p>):(<></>)}
-        <Button onClick={()=> this.setState({signingUp:false})} id="exitSignUp">Exit</Button>
+        <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({signingUp:false})} id="exitSignUp">Exit</Button>
         </div></>}
         
       </>
@@ -313,20 +326,51 @@ class App extends Component {
 
       )
     } else {
+      if(carLookup){
+        var car = currentCar[0];
+        return <><Header />
+        <div style={{marginLeft:'30%', marginTop: 55}}>
+        <h1>{car.make} {car.model} {car.year}</h1>
+        <p>Price: ${car.price}</p>
+        <p>Doors: {car.doors}</p>
+        <p>Fuel type: {car.fueltype}</p>
+        <p>EPA Passenger: {car.epapassenger}</p>
+        <p>Transmission: {car.transmission}</p>
+        <p>Engine: {car.engine}</p>
+        <p>Weight: {car.weight}</p>
+        <p>Length: {car.length}</p>
+        <p>Width: {car.width}</p>
+        <p>Towing capacity: {car.towingcapacity}</p>
+        <p>Trunk capacity: {car.trunkcapacity}</p>
+        <p>Horsepower: {car.horsepower}</p>
+        <p>Torque: {car.torque}</p>
+        <p>Torque RPM: {car.torquerpm}</p>
+        <p>MPG (City): {car.mpgcity}</p>
+        <p>MPG (Highway): {car.mpghighway}</p>
+        <p>MPG (Combined): {car.mpgcombined}</p>
+        <p>Luxury car?: {car.luxury}</p>
+        <p>Sports car?: {car.sport}</p>
+        </div>
+        <div style={{textAlign: 'center'}}>
+          <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({carLookup:false})} id="exitCarInfo">Exit</Button>
+        </div>
+        </>;
+      }else{
       return <>
         <Header />
         {this.BackButton()}
         <div style={{ marginTop: 10, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#C2F2BA", borderRadius: 22 }}>
-          <h1>Here are some cars that match your needs!</h1>
+          <h1>Here are some cars that match your needs! Click on a car's name to see more information!</h1>
         </div>
-        <div style={{ textAlign: 'center' }} id="results">
+        <div style={{ textAlign: 'center'}} id="results">
           {cars.map(car => {
-            return <><p class="result">{car.make}, {car.model} a {car.transmission} car that runs on {car.fueltype} for ${car.price} with {car.doors} doors.</p>{loggedIn ? <Button onClick={()=>this.SubmitFavoriteCar(car.carid)}>Submit</Button> : <></>}</>;
+            return <div class="result" style={{display:'flex', justifyContent: 'center'}}><Button style={{borderWidth:0, backgroundColor:'white'}} onClick={()=>{this.getSingleCarInfo(car.carid); this.setState({carLookup:true}); }}>{car.make} {car.model} {car.year} ${car.price} </Button>{loggedIn ? <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=>this.SubmitFavoriteCar(car.carid)}>Favorite</Button> : <></>}</div>;
           })
           }
-          <Button onClick={()=> this.setState({quizEntered:false})} id="exitQuiz">Exit</Button>
         </div>
+        <div style={{textAlign: 'center'}}><Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({quizEntered:false})} id="exitQuiz">Exit</Button></div>
       </>
+      }
     }
   } else if(loggingIn && !loggedIn){
     return <>{<><Header />
@@ -340,26 +384,55 @@ class App extends Component {
             Password: <input type="password" name="password" id="password" minLength="8" required />
           </label>
           <br></br>
-          <Button onClick={()=> this.SubmitUserLogIn(document.getElementById("username").value, document.getElementById("password").value)} id="submitLogin">Submit</Button>
+          <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.SubmitUserLogIn(document.getElementById("username").value, document.getElementById("password").value)} id="submitLogin">Submit</Button>
         </form>
-        <Button onClick={()=> this.setState({loggingIn:false})} id="exitLogIn">Exit</Button>
+        <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({loggingIn:false})} id="exitLogIn">Exit</Button>
         </div></>}
         
       </>
   } else if(loggingIn && loggedIn){
+    if(carLookup){
+      var car = currentCar[0];
+        return <><Header />
+        <div style={{marginLeft:'30%', marginTop: 55}}>
+        <h1>{car.make} {car.model} {car.year}</h1>
+        <p>Price: ${car.price}</p>
+        <p>Doors: {car.doors}</p>
+        <p>Fuel type: {car.fueltype}</p>
+        <p>EPA Passenger: {car.epapassenger}</p>
+        <p>Transmission: {car.transmission}</p>
+        <p>Engine: {car.engine}</p>
+        <p>Weight: {car.weight}</p>
+        <p>Length: {car.length}</p>
+        <p>Width: {car.width}</p>
+        <p>Towing capacity: {car.towingcapacity}</p>
+        <p>Trunk capacity: {car.trunkcapacity}</p>
+        <p>Horsepower: {car.horsepower}</p>
+        <p>Torque: {car.torque}</p>
+        <p>Torque RPM: {car.torquerpm}</p>
+        <p>MPG (City): {car.mpgcity}</p>
+        <p>MPG (Highway): {car.mpghighway}</p>
+        <p>MPG (Combined): {car.mpgcombined}</p>
+        <p>Luxury car?: {car.luxury}</p>
+        <p>Sports car?: {car.sport}</p>
+        </div>
+        <div style={{textAlign: 'center'}}>
+          <Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({carLookup:false})} id="exitCarInfo">Exit</Button>
+        </div>
+        </>
+    }else{
     return<><Header/>
     <div style={{ marginTop: 55, marginLeft: 10, marginRight: 10, marginBottom: 30, paddingLeft: '5%', paddingRight: '5%', paddingTop: '1%', paddingBottom: '1%', textAlign: 'center', backgroundColor: "#C2F2BA", borderRadius: 22 }}>
           <h1>Here are the cars you favorited!</h1>
         </div>
-        <div style={{ textAlign: 'center' }} id="results">
-          <p>test</p>
+        <div style={{ textAlign: 'center'}} id="results">
           {favorites.map(favorite => {
-            return <p class="result">{favorite.make}, {favorite.model} a {favorite.transmission} car that runs on {favorite.fueltype} for ${favorite.price} with {favorite.doors} doors.</p>;
+            return <div class="result" style={{display:'flex', justifyContent: 'center'}}><Button style={{borderWidth:0, backgroundColor:'white'}} onClick={()=>{this.getSingleCarInfo(favorite.carid); this.setState({carLookup:true}); }}>{favorite.make} {favorite.model} {favorite.year} ${favorite.price} </Button><Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=>console.log('Would be removing car with id of ' + favorite.carid)}>Remove</Button></div>
           })
           }
         </div>
-    <div style={{ marginTop: 55, marginLeft: '30%'}}><Button onClick={()=> this.setState({loggingIn:false})} id="exitLogIn">Exit</Button></div></>
-  }
+    <div style={{textAlign: 'center'}}><Button style={{backgroundColor:"#a2a6a3", borderWidth:0, borderRadius:13}} onClick={()=> this.setState({loggingIn:false})} id="exitLogIn">Exit</Button></div></>
+  }}
   }
 }
 
