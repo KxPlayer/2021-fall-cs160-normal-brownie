@@ -1,4 +1,4 @@
-/* commented out to run*/
+/* commented out to run
 
 package com.example.carfinder.frontendtesting;
 
@@ -246,4 +246,4 @@ public class FrontEndTesting {
     }
 }
 
-/**/
+*/

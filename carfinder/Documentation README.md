@@ -15,3 +15,10 @@ When making changes, make sure to do it on a branch. Pull from the main branch i
 
 
 To build the website, navigate to the carfinder directory in the console/command prompt and run “mvnw spring-boot:run” without quotes. If there is any problem, then it will let you know. Else, the website should be up and running at localhost:8080/. Check the user guide to see how the website works.
+
+Docker
+The Dockerfile is currently stored in carfinder/docker/
+Before you build the image with the Dockerfile, you must create the jar file with ./mvnw clean package
+The dockerfile builds the image using the jar file in carfinder/target/
+When you run the docker image, you should map the host port to the container's port 8080.
+docker run -p 8080:8080 carfinder
